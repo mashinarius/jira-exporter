@@ -10,7 +10,8 @@ from jira_test import test_jira_load_ticket_seconds
 if __name__ == '__main__':
 
     config_file = 'atlassian-exporter.ini'
-    if sys.argv[1]:
+
+    if len(sys.argv) > 1:
         config_file = sys.argv[1]
 
     app_config = AppConfig(config_file)

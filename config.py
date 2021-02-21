@@ -2,7 +2,7 @@ import configparser
 
 
 class AppConfig(object):
-    def __init__(self):
+    def __init__(self, filename):
 
         config = configparser.ConfigParser()
         config.read(filename)

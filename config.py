@@ -9,6 +9,7 @@ class AppConfig(object):
         config.read(filename)
 
         jira_config = config['JIRA']
+        wiki_config = config['WIKI']
         selenoid_config = config['SELENOID']
         exporter_config = config['EXPORTER']
 
@@ -21,6 +22,14 @@ class AppConfig(object):
             self.JIRA_CHECK_URL = jira_config['check-url']
         else:
             self.JIRA_CHECK_URL = "https://my.jira.com"
+
+        self.WIKI_USERNAME = wiki_config['username']
+        self.WIKI_PASSWORD = wiki_config['password']
+
+        if wiki_config.get('check-url'):
+            self.WIKI_CHECK_URL = wiki_config['check-url']
+        else:
+            self.WIKI_CHECK_URL = "https://my.wiki.com"
 
         if selenoid_config.get('hub-url'):
             self.SELENOID_HUB_URL = selenoid_config['hub-url']
@@ -47,12 +56,38 @@ class AppConfig(object):
         else:
             self.EXPORTER_SCRAPE_TIMEOUT_SEC = 300
 
-        if exporter_config.get('metric-name-login'):
-            self.EXPORTER_METRIC_NAME_LOGIN = exporter_config['metric-name-login']
-        else:
-            self.EXPORTER_METRIC_NAME_LOGIN = 'jira_login_seconds'
 
-        if exporter_config.get('metric-name-load-issue'):
-            self.EXPORTER_METRIC_NAME_LOAD = exporter_config['metric-name-load-issue']
+        # JIRA metrics
+        if exporter_config.get('metric-name-jira-open-login-page'):
+            self.EXPORTER_METRIC_JIRA_PAGE1 = exporter_config['metric-name-jira-open-login-page']
         else:
-            self.EXPORTER_METRIC_NAME_LOAD = 'jira_load_ticket_seconds'
+            self.EXPORTER_METRIC_JIRA_PAGE1 = 'jira_open_login_page_seconds'
+
+        if exporter_config.get('metric-name-jira-load-issue-page'):
+            self.EXPORTER_METRIC_JIRA_PAGE2 = exporter_config['metric-name-jira-load-issue-page']
+        else:
+            self.EXPORTER_METRIC_JIRA_PAGE2 = 'jira_load_ticket_page_seconds'
+
+        if exporter_config.get('metric-name-jira-total'):
+            self.EXPORTER_METRIC_JIRA_TOTAL = exporter_config['metric-name-jira-total']
+        else:
+            self.EXPORTER_METRIC_JIRA_TOTAL = 'jira_load_total_seconds'
+
+
+        # WIKI metrics
+        if exporter_config.get('metric-name-wiki-login-page'):
+            self.EXPORTER_METRIC_WIKI_PAGE1 = exporter_config['metric-name-wiki-login-page']
+        else:
+            self.EXPORTER_METRIC_WIKI_PAGE1 = 'wiki_open_login_page_seconds'
+
+        if exporter_config.get('metric-name-wiki-load-page'):
+            self.EXPORTER_METRIC_WIKI_PAGE2 = exporter_config['metric-name-wiki-load-page']
+        else:
+            self.EXPORTER_METRIC_WIKI_PAGE2 = 'wiki_load_default_page_seconds'
+
+        if exporter_config.get('metric-name-wiki-total'):
+            self.EXPORTER_METRIC_WIKI_TOTAL = exporter_config['metric-name-wiki-total']
+        else:
+            self.EXPORTER_METRIC_WIKI_TOTAL = 'wiki_load_total_seconds'
+
+

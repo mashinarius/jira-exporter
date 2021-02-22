@@ -58,6 +58,8 @@ def test_jira_load_ticket_seconds(app_config: AppConfig):
 
     if not ms3:
         exit(-1)
+
     print("load page 1 " + str((ms2 - ms1).seconds))
     print("login page " + str((ms3 - ms2).seconds))
-    return (ms3 - ms1).seconds
+
+    return (ms2 - ms1).seconds, (ms3 - ms2).seconds

@@ -5,6 +5,7 @@ class AppConfig(object):
     def __init__(self, filename):
 
         config = configparser.ConfigParser()
+        print('reading configuration from file: ' + str(filename))
         config.read(filename)
 
         jira_config = config['JIRA']
@@ -46,7 +47,12 @@ class AppConfig(object):
         else:
             self.EXPORTER_SCRAPE_TIMEOUT_SEC = 300
 
-        if exporter_config.get('metric-name'):
-            self.EXPORTER_METRIC_NAME = exporter_config['metric-name']
+        if exporter_config.get('metric-name-login'):
+            self.EXPORTER_METRIC_NAME_LOGIN = exporter_config['metric-name-login']
         else:
-            self.EXPORTER_METRIC_NAME = 'jira_load_ticket_seconds'
+            self.EXPORTER_METRIC_NAME_LOGIN = 'jira_login_seconds'
+
+        if exporter_config.get('metric-name-load-issue'):
+            self.EXPORTER_METRIC_NAME_LOAD = exporter_config['metric-name-load-issue']
+        else:
+            self.EXPORTER_METRIC_NAME_LOAD = 'jira_load_ticket_seconds'
